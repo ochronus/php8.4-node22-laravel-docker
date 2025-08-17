@@ -41,8 +41,8 @@ RUN docker-php-ext-install \
     opcache pcntl
 
 # Install PECL extensions
-RUN pecl install redis memcached igbinary msgpack \
-    && docker-php-ext-enable redis memcached igbinary msgpack
+RUN pecl install redis memcached igbinary msgpack swoole \
+    && docker-php-ext-enable redis memcached igbinary msgpack swoole
 
 # Configure PHP settings for production
 RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
