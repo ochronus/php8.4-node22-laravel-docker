@@ -34,15 +34,13 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP extensions
-RUN docker-php-ext-install \
-    pdo pdo_mysql pdo_pgsql pdo_sqlite mysqli pgsql \
-    zip intl mbstring bcmath calendar ctype dom fileinfo \
-    gd gettext gmp iconv exif soap sockets xsl \
-    opcache pcntl
+# Note: ffi, ctype, dom, fileinfo, iconv are core extensions in PHP 8.4
+ENV PHP_EXT="pdo pdo_mysql pdo_pgsql pdo_sqlite mysqli pgsql zip intl mbstring bcmath calendar gd gettext gmp exif soap sockets xsl opcache pcntl"
+RUN docker-php-ext-install $PHP_EXT
 
 # Install PECL extensions
-RUN pecl install redis memcached igbinary msgpack swoole \
-    && docker-php-ext-enable redis memcached igbinary msgpack swoole
+ENV PHP_PKGS="redis memcached igbinary msgpack swoole grpc protobuf opentelemetry"
+RUN pecl install $PHP_PKGS && docker-php-ext-enable $PHP_PKGS
 
 # Configure PHP settings for production
 RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
