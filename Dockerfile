@@ -1,5 +1,5 @@
 # --- System Stage: Install all system tools and extensions ---
-FROM php:8.4-fpm-bookworm AS system
+FROM php:8.4-fpm-trixie AS system
 
 # Install Node.js 22
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
