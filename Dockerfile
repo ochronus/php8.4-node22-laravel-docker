@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     supervisor \
+    libmagickwand-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure GD extension
@@ -39,7 +40,7 @@ ENV PHP_EXT="pdo pdo_mysql pdo_pgsql pdo_sqlite mysqli pgsql zip intl mbstring b
 RUN docker-php-ext-install $PHP_EXT
 
 # Install PECL extensions
-ENV PHP_PKGS="redis memcached igbinary msgpack swoole grpc protobuf opentelemetry"
+ENV PHP_PKGS="redis memcached igbinary msgpack swoole grpc protobuf opentelemetry imagick"
 RUN pecl install $PHP_PKGS && docker-php-ext-enable $PHP_PKGS
 
 # Configure PHP settings for production
