@@ -2,11 +2,11 @@
 FROM php:8.4-fpm-trixie AS system
 
 # Install Node.js 22
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs
 
 # Install system dependencies (both build and runtime)
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     libicu-dev \
     libzip-dev \
     zlib1g-dev \
